@@ -21,10 +21,14 @@ class KMeans():
                 position is too small (below your "tolerance").
         """ 
         # In the following 4 lines, please initialize your arguments
-
+        self.k = k
+        self.metric = metric
+        self.max_iter = max_iter
+        self.tol = tol
         
         # In the following 2 lines, you will need to initialize 1) centroid, 2) error (set as numpy infinity)
-
+        self.centroid = None
+        self.error = np.inf
     
     def fit(self, matrix: np.ndarray):
         """
@@ -41,7 +45,8 @@ class KMeans():
         
         # In the line below, you need to randomly select where the centroid's positions will be.
         # Also set your initialized centroid to be your random centroid position
-
+        print(matrix)
+        self.centroid = np.random.choice(0)
         
         # In the line below, calculate the first distance between your randomly selected centroid positions
         # and the data points
