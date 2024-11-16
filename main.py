@@ -14,10 +14,10 @@ def main():
     og_iris = np.array(load_iris().data)
     
     # Initialize your KMeans algorithm
-    
+    model = KMeans(k = 3, metric = "euclidean", max_iter = 1000, tol = 1e-4)
     
     # Fit model
-    
+    model.fit(og_iris)
 
     # Load new dataset
     df = np.array(pd.read_csv('data/iris_extended.csv', 
