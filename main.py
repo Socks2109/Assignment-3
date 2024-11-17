@@ -5,6 +5,7 @@ from sklearn.datasets import load_iris
 # from sklearn.metrics import  
 from cluster import (KMeans)
 from cluster.visualization import plot_3d_clusters
+from sklearn.metrics import silhouette_score
 
 
 def main(): 
@@ -14,7 +15,7 @@ def main():
     og_iris = np.array(load_iris().data)
     
     # Initialize your KMeans algorithm
-    model = KMeans(k = 3, metric = "euclidean", max_iter = 1000, tol = 1e-4)
+    model = KMeans(k = 3, metric = "euclidean", max_iter = 1000, tol = 1e-6)
     
     # Fit model
     model.fit(og_iris)
@@ -24,19 +25,32 @@ def main():
                 usecols = ['petal_length', 'petal_width', 'sepal_length', 'sepal_width']))
 
     # Predict based on this new dataset
-    
+    predict = model.predict(df)
     
     # You can choose which scoring method you'd like to use here:
-    
+    score = silhouette_score(df, predict)
     
     # Plot your data using plot_3d_clusters in visualization.py
-
+    plot_3d_clusters(df, predict, model, score)
     
     # Try different numbers of clusters
+    inertias = []
+    K = range(2, 10)
+    for k in K:
+        model = KMeans(k, metric = "euclidean", max_iter = 1000, tol = 1e-8)
+        model.fit(og_iris)
+        predict = model.predict(df)
+        score = silhouette_score(df, predict)
+        inertias.append(model.get_error())
+        print(score)
 
-    
     # Plot the elbow plot
-
+    plt.plot(K, inertias, 'bx-')
+    plt.xlabel('Number of Clusters (k)')
+    plt.ylabel('Inertia')
+    plt.title('The Elbow Method using Inertia')
+    plt.grid()
+    plt.show()
     
     # Question: 
     # Please answer in the following docstring how many species of flowers (K) you think there are.

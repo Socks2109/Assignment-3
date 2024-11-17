@@ -67,18 +67,19 @@ class KMeans():
             new_centroids = np.array(new_centroids)
             # Within the loop, calculate distance of data point to centroid then calculate MSE or SSE (inertia)
             distance = cdist(matrix, new_centroids, metric = self.metric)
-            MSE = np.sum((new_centroids - self.centroids) ** 2)/ matrix.shape
+            SSE = np.sum((matrix - new_centroids[closest_centroids]) ** 2)
+
         
             # Within the loop, compare your previous error and the current error
             # Break if the error is less than the tolerance you've set 
-            if np.all(np.abs(self.error - MSE) < self.tol):
+            if np.max(np.abs(self.error - SSE)) < self.tol:
             
                 # Set your error as calculated inertia here before you break!
-                self.error = MSE
+                self.error = SSE
                 break
             
             # Set error as calculated inertia
-            self.error = MSE
+            self.error = SSE
 
             # Update the centroid position
             self.centroids = new_centroids
@@ -94,8 +95,10 @@ class KMeans():
             np.ndarray: 
                 An array/list of predictions will be returned.
         """
-        # In the line below, return data point's assignment 
-        return self.fit(self, matrix)
+        # In the line below, return data point's assignment
+        closest_distance = cdist(matrix, self.centroids, metric = self.metric)
+        predict = np.argmin(closest_distance, axis=1)
+        return predict
 
     
     def get_error(self) -> float:
