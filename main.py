@@ -35,21 +35,18 @@ def main():
     
     # Try different numbers of clusters
     inertias = []
-    K = range(2, 10)
+    K = range(1, 10)
     for k in K:
-        model = KMeans(k, metric = "euclidean", max_iter = 1000, tol = 1e-8)
+        model = KMeans(k, metric = "euclidean", max_iter = 100000, tol = 1e-6)
         model.fit(og_iris)
         predict = model.predict(df)
-        score = silhouette_score(df, predict)
         inertias.append(model.get_error())
-        print(score)
 
     # Plot the elbow plot
     plt.plot(K, inertias, 'bx-')
     plt.xlabel('Number of Clusters (k)')
     plt.ylabel('Inertia')
     plt.title('The Elbow Method using Inertia')
-    plt.grid()
     plt.show()
     
     # Question: 
@@ -57,10 +54,10 @@ def main():
     # Provide a reasoning based on what you have done above: 
     
     """
-    How many species of flowers are there: 
+    How many species of flowers are there: 3
     
     Reasoning: 
-    
+    The elbow plot shows that the gradient descreases significantly less after k = 3.
     
     
     

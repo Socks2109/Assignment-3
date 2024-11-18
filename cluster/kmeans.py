@@ -72,7 +72,7 @@ class KMeans():
         
             # Within the loop, compare your previous error and the current error
             # Break if the error is less than the tolerance you've set 
-            if np.max(np.abs(self.error - SSE)) < self.tol:
+            if np.abs(self.error - SSE) < self.tol:
             
                 # Set your error as calculated inertia here before you break!
                 self.error = SSE
