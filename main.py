@@ -46,7 +46,7 @@ def main():
     plt.plot(K, inertias, 'bx-')
     plt.xlabel('Number of Clusters (k)')
     plt.ylabel('Inertia')
-    plt.title('The Elbow Method using Inertia')
+    plt.title('Elbow Plot')
     plt.show()
     
     # Question: 
@@ -58,9 +58,7 @@ def main():
     
     Reasoning: 
     The elbow plot shows that the gradient descreases significantly less after k = 3.
-    
-    
-    
+    This indicates that k = 3 is the optimal cluster number.
     """
 
     
